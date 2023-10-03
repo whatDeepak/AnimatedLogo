@@ -1,0 +1,142 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+:root {
+  --background: #fff;
+  --background-alt: #adadad;
+  --background-contrast: #1c1c1c;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1c1c1c;
+    --background-alt: #363636;
+    --background-contrast: #fff;
+ }
+}
+.page {
+  width: 100%;
+  height: 100%;
+  overflow: hidden auto;
+  position: relative;
+  background-color: var(--background);
+}
+.page:hover:has(.pulling) {
+  cursor: grabbing;
+}
+.content {
+  width: 100%;
+  color: var(--background-contrast);
+  font-family: system-ui;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.content p {
+  letter-spacing: 0.02rem;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.25;
+  font-size: 0.8rem;
+  margin: 2rem 0;
+  white-space: pre-line;
+  user-select: none;
+}
+.content p small {
+  display: block;
+  font-size: 0.8em;
+}
+.content select {
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--background);
+  border: 1px solid var(--background-contrast);
+  color: var(--background-contrast);
+  border-radius: 0.5rem;
+  margin: 0;
+}
+.refresher {
+  height: 6rem;
+  transition: height 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--background-alt);
+}
+.refresher.pulling {
+  transition: none;
+}
+.refresher.pulling .logoWrapper {
+  transition: none;
+}
+.refresher .logoWrapper {
+  transition: transform 0.2s ease;
+}
+.refresher .logo {
+  height: 3rem;
+  aspect-ratio: 1;
+}
+.pop .refresher .logo {
+  animation: logoPop 0.5s ease-out;
+}
+@keyframes logoPop {
+  0% {
+    transform: scale(1);
+ }
+  10% {
+    transform: scale(1.2);
+ }
+  100% {
+    transform: scale(1);
+ }
+}
+#animated-logo {
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+#animated-logo svg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  shape-rendering: geometricPrecision;
+}
+#animated-logo svg path, #animated-logo svg polyline {
+  fill: none;
+  stroke: var(--background-contrast);
+  color: var(--background-contrast);
+  transition: opacity var(--logo-duration-fade) 0.15s ease, stroke-dashoffset 0.25s ease-out;
+}
+#animated-logo .animated-logo-runner {
+  stroke-dasharray: var(--logo-runner-length) 123456;
+  stroke-dashoffset: var(--logo-runner-length);
+}
+.pulling #animated-logo .animated-logo-base {
+  opacity: 0.2;
+  transition: opacity var(--logo-duration-fade) ease, stroke-dashoffset 0.25s ease-out;
+}
+.pulling #animated-logo .animated-logo-runner {
+  stroke-dashoffset: calc(var(--logo-runner-offfset));
+  transition: none;
+}
+#animated-logo.active .animated-logo-base {
+  opacity: 0.2;
+}
+#animated-logo.active path, #animated-logo.active polyline {
+  transition: stroke-dashoffset var(--logo-duration-runner) ease-in-out;
+}
+#animated-logo.loading .animated-logo-runner {
+  stroke-dashoffset: calc(var(--logo-length) * -1);
+}
+#animated-logo.complete .animated-logo-runner {
+  stroke-dashoffset: 0;
+  stroke-dasharray: var(--logo-length) 123456;
+}
